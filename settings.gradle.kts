@@ -1,2 +1,1 @@
-rootProject.name = "family-net-worth-tracker"
-
+rootProject.name = "family_net_worth_tracker"
