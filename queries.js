@@ -73,7 +73,7 @@ const verifyUser = (request, response) => {
       }
 
       if (users.length === 0) {
-          response.status(400).send('User not found');
+          response.status(401).send('Invalid credentials');
           return;
       }
 
@@ -92,7 +92,7 @@ const verifyUser = (request, response) => {
             response.status(200).send('Login successful');
           } else {
             console.log('Invalid credentials');  
-            response.status(400).send('Invalid credentials');
+            response.status(401).send('Invalid credentials');
           }
       });
   });
