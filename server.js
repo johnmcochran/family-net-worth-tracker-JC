@@ -1,9 +1,11 @@
 const express = require('express');
 const db = require('./queries')
+const cors = require('cors');
 const bodyParser = require('body-parser')
 const app = express();
 const port = 3000;
 
+app.use(cors()); // added this to allow using localhost:3000 from my app that's on localhost:8080
 app.use(express.static('dist')); // Assuming your Vue.js app is in a 'dist' folder
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ 
