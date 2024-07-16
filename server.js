@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./queries')
 const cors = require('cors');
 const bodyParser = require('body-parser')
+const {apiCreateUser} = require("./family_net_worth_tracker_app/src/api/user");
 const app = express();
 const port = 3000;
 
@@ -18,7 +19,7 @@ app.get('/', (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API"})
 });
 
-app.post('/createuser', db.createUser)
+app.post('/createuser', apiCreateUser)
 app.post('/login', db.verifyUser)
 
 
