@@ -45,14 +45,12 @@ const apiVerifyUser = (request, response) => {
           response.status(500).send(err.message);
           return;
       }
-
-      if (users.length === 0) {
-          response.status(401).send('Invalid credentials');
+      if (users.length < 1) {
+        console.log('Invalid username.')  
+        response.status(401).send('Invalid credentials.');
           return;
       }
-
       const user = users[0];
-
       // Compare the entered password with the stored hashed password
       verifyPassword(password, user, response);
   });
@@ -75,7 +73,10 @@ function verifyPassword(password, user, response) {
             console.log('Password match, login successful');
             response.status(200).send('Login successful');
         } else {
-            console.log('Invalid credentials');
+            console.log('match? ' + isMatch)
+            console.log(password)
+            console.log(user.password)
+            console.log('Invalid password');
             response.status(401).send('Invalid credentials');
         }
     });

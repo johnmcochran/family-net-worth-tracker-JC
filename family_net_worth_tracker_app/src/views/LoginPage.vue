@@ -36,28 +36,43 @@ export default {
     };
   },
   methods: {
-
-
     async login() {
       // Handle login logic here
       console.log('Login clicked with username:', this.login_username, 'and password:', this.login_password);
-    },
-    
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: this.login_username,
+            password: this.login_password
+          }),
+        });
 
-    parseCreateUserResponse(response) {
+        const response_message = this.parseLoginResponse(response)
+        alert(response_message)
+      }
+      catch (error) {
+        console.error('Error logging in: ', error);
+        alert('An error occurred while attempting to log in.');
+      }     
+    
+    },
+    parseLoginResponse(response) {
       switch (response.status) {
-        case 201:
-          return 'User created successfully';
-        case 400:
-          return 'User already exists, please think of another username and try again';
+        case 200:
+          return 'Login Successful.';
+        case 401:
+          return 'Username or password is incorrect. Please try again.';
         case 500:
           return 'An error occurred on the server';
         default:
           return 'Unexpected error occurred';
       }
     },
-
-    
     async create_user() {
       console.log('Create Account clicked with username:', this.create_username, 'and password:', this.create_password);
       
@@ -80,7 +95,20 @@ export default {
         console.error('Error creating user: ', error);
         alert('An error occurred while creating the user');
       }     
-    }
+    },
+    parseCreateUserResponse(response) {
+      switch (response.status) {
+        case 201:
+          return 'User created successfully';
+        case 400:
+          return 'User already exists, please think of another username and try again';
+        case 500:
+          return 'An error occurred on the server';
+        default:
+          return 'Unexpected error occurred';
+      }
+    },
+
     // forgot_password() {}
   },
 };

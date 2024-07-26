@@ -19,8 +19,8 @@ app.get('/', (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API"})
 });
 
-app.post('/api/createuser', apiCreateUser)
 app.post('/api/login', apiVerifyUser)
+app.post('/api/createuser', apiCreateUser)
 
 
 
