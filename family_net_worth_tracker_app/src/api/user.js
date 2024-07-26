@@ -73,9 +73,6 @@ function verifyPassword(password, user, response) {
             console.log('Password match, login successful');
             response.status(200).send('Login successful');
         } else {
-            console.log('match? ' + isMatch)
-            console.log(password)
-            console.log(user.password)
             console.log('Invalid password');
             response.status(401).send('Invalid credentials');
         }
