@@ -1,5 +1,4 @@
 <!-- LoginPage.vue -->
-
 <template>
   <div>
     <h2>Login</h2>
@@ -63,7 +62,7 @@ export default {
       console.log('Create Account clicked with username:', this.create_username, 'and password:', this.create_password);
       
       try {
-        const response = await fetch('http://localhost:3000/createuser', {
+        const response = await fetch('http://localhost:3000/api/createuser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
