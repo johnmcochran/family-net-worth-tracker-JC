@@ -2,7 +2,11 @@
 <template>
   <div>
     <h2>Login</h2>
+
+    
     <h3>Existing User</h3>
+
+    
     <form @submit.prevent="login">
       <label for="username">Username:</label>
       <input type="text" id="username" v-model="login_username" />
@@ -12,20 +16,38 @@
 
       <button type="submit">Login</button>
     </form>
+
+
     <h3> New User</h3>
+
+
     <form @submit.prevent="create_user">
       <label for="create_username">Username:</label>
       <input type="text" id="create_username" v-model="create_username" />
 
       <label for="create_password">Password:</label>
-      <input type="create_password" id="create_password" v-model="create_password" />
-
+      <Password v-model="create_password">
+          <template #header>
+              <div class="font-semibold text-xm mb-4">Pick a password</div>
+          </template>
+          <template #footer>
+              <Divider />
+              <ul class="pl-2 ml-2 my-0 leading-normal">
+                  <li>At least one lowercase</li>
+                  <li>At least one uppercase</li>
+                  <li>At least one numeric</li>
+                  <li>Minimum 8 characters</li>
+              </ul>
+          </template>
+      </Password>
       <button type="submit">Create Account</button>
     </form>
   </div>
 </template>
 
 <script>
+import DOMPurify from 'dompurify'; 
+
 export default {
   data() {
     return {
@@ -39,7 +61,8 @@ export default {
     async login() {
       // Handle login logic here
       console.log('Login clicked with username:', this.login_username, 'and password:', this.login_password);
-      
+      this.login_username = DOMPurify.sanitize(this.login_username);
+      this.login_password = DOMPurify.sanitize(this.login_password);
       try {
         const response = await fetch('http://localhost:3000/api/login', {
           method: 'POST',
@@ -75,7 +98,8 @@ export default {
     },
     async create_user() {
       console.log('Create Account clicked with username:', this.create_username, 'and password:', this.create_password);
-      
+      this.create_username = DOMPurify.sanitize(this.create_username);
+      this.create_password = DOMPurify.sanitize(this.create_password);
       try {
         const response = await fetch('http://localhost:3000/api/createuser', {
           method: 'POST',

@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "dompurify": "^3.1.6",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.0.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
