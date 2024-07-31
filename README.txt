@@ -14,3 +14,6 @@ lessons learned from talking w/ Alex:
     for rest api, have query sent to api/table_name instead of just table_name
         this keeps users from accidentally navigating to your rest api
         
+how to test:
+using vitest, reference test>common.test.js
+in the app terminal, npm run test
