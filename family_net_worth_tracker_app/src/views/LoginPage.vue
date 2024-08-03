@@ -61,8 +61,8 @@ export default {
     async login() {
       // Handle login logic here
       console.log('Login clicked with username:', this.login_username, 'and password:', this.login_password);
-      this.login_username = DOMPurify.sanitize(this.login_username);
-      this.login_password = DOMPurify.sanitize(this.login_password);
+      this.login_username = DOMPurify.sanitize(this.login_username).trim();
+      this.login_password = DOMPurify.sanitize(this.login_password).trim();
       try {
         const response = await fetch('http://localhost:3000/api/login', {
           method: 'POST',
@@ -97,9 +97,14 @@ export default {
       }
     },
     async create_user() {
-      console.log('Create Account clicked with username:', this.create_username, 'and password:', this.create_password);
-      this.create_username = DOMPurify.sanitize(this.create_username);
-      this.create_password = DOMPurify.sanitize(this.create_password);
+      // console.log('Create Account clicked with username:', this.create_username, 'and password:', this.create_password);
+      this.create_username = DOMPurify.sanitize(this.create_username).trim();
+      if (this.isPasswordWeak(this.create_password.trim())) {
+        console.error('Weak Password');
+        alert('Weak Password')
+        return;
+      }
+      this.create_password = DOMPurify.sanitize(this.create_password).trim();
       try {
         const response = await fetch('http://localhost:3000/api/createuser', {
           method: 'POST',
@@ -119,6 +124,19 @@ export default {
         console.error('Error creating user: ', error);
         alert('An error occurred while creating the user');
       }     
+    },
+    isPasswordWeak(password) {
+      const minLength = 8;
+      const hasLowercase = /[a-z]/.test(password);
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const isPasswordStrong = (password.length >= minLength &&
+        hasLowercase &&
+        hasUppercase &&
+        hasNumber)
+      return (
+        !isPasswordStrong
+      );
     },
     parseCreateUserResponse(response) {
       switch (response.status) {
